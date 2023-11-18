@@ -12,7 +12,7 @@ HienString MACRO xau
 ;--------------------
 ; MACRO XOA MAN HINH |
 ;--------------------
-clrscr MACRO
+CLRSCR MACRO
 	push AX
 	mov  AH,0fh		; Chuc nang lay mode man hinh hien thoi
 	int  10h		; va so mode nam o AL

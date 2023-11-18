@@ -1,72 +1,75 @@
-;-------------------------------
-;   MACRO HIEN MOT XAU KY TU	|
-; KET THUC BANG '$' RA MAN HINH	|
-;-------------------------------
-HienString MACRO xau
-	push AX DX
-	mov  DX,offset xau	; DX tro den dau xau
-	mov  AH,9		; Chuc nang hien 1 xau ky tu 
-	int  21h		; (ket thuc bang '$') len man hinh
-	pop  DX AX
-	ENDM
-;--------------------
-; MACRO XOA MAN HINH |
-;--------------------
-CLRSCR MACRO
-	push AX
-	mov  AH,0fh		; Chuc nang lay mode man hinh hien thoi
-	int  10h		; va so mode nam o AL
-	mov  AH,0		; Chuc nang dat mode cho man hinh
-	int  10h		; so mode can dat nam o AL
-	pop  AX
-	ENDM
-;-----------------------------
+INCLUDE lib1.asm
 .MODEL small
+;.STACK 100h
 .DATA
-m1 db 13,10,'         CHUC NANG TAO LAP THU MUC'
-   db 13,10,'         -----------***-----------'
-   db 13,10,13,10,'     Vao ten TM can tao: $'
-Err_MD db 13,10,'     Khong tao duoc TM!$'
-Empt_MD db 13,10,'     Chua nhap ten thu muc! Hay nhap lai!$'
-suc_MD db 13,10,'     TM da duoc tao!$'
-buff     db 30
-         db ?
-dir_name db 30 dup(?)
-tieptuc db 13,10,'     Co tiep tuc CT (c/k)? $'
+dtt1  db 13,10,'   Hay vao ten tep can dat thuoc tinh: $'
+dtt2  db 13,10,'          Vao thuoc tinh cho tep: '
+        db 13,10,'          0. Khong dat thuoc tinh'
+        db 13,10,'          1. Read Only'
+        db 13,10,'          2. Hidden'
+        db 13,10,'          3. Read Only+Hidden'
+        db 13,10,'          4. System'
+        db 13,10,'          5. Read Only+System'
+        db 13,10,'          6. Hidden+System'
+        db 13,10,'          7. Read Only+Hidden+System'
+        db 13,10,'          8. Archive'
+        db 13,10,'          9. Archive+Read Only'
+        db 13,10,'         10. Archive+Hidden'
+        db 13,10,'         11. Archive+Read Only+Hidden'
+        db 13,10,'         12. Archive+System'
+        db 13,10,'         13. Archive+Read Only+System'
+        db 13,10,'         14. Archive+Hidden+System'
+        db 13,10,'         15. Archive+Read Only+Hidden+System'
+        db 13,10,13,10,'        -> Hay chon: $'
+  Err_DTT db 13,10,'   Khong dat duoc thuoc tinh cho tep! $'
+  Suc_DTT db 13,10,'   Tep da dat duoc thuoc tinh! $'
+  buff          db 30
+                   db ?
+  file_name db 30 dup(?)
+	  tieptuc      db 13,10,' Co tiep tuc CT (c/k) ? $'
+
 .CODE
-PUBLIC _TAOTM
-_TAOTM PROC
-      L0:
-         CLRSCR
-         HienString m1
-         lea dx,buff
-         call GET_DIR_NAME
-         lea bx,dir_name
-         mov al,[bx]
-         and al,al
-         jnz LX
-         HienString Empt_MD
-         mov ah,1
-         int 21h
-         jmp L0
-     LX:
-         lea dx,dir_name
-         mov ah,39h 
-         int 21h  ;chuc nang tao thu muc
-         jnc L1
-         HienString Err_MD
-         jmp Exit
-       L1:
-         HienString suc_MD
-       Exit:
-         HienString tieptuc
-         mov ah,1
-         int 21h
-         cmp al,'c'
-         jne Thoat
-         jmp L0
-    Thoat:
-          ret
-_TAOTM ENDP
-INCLUDE lib3.asm
+;PS:
+;	  mov  ax,@data
+;    mov  ds,ax
+
+PUBLIC _THEM_THUOC_TINH
+_THEM_THUOC_TINH PROC
+
+L_DTT0:
+  CLRSCR
+  HienString dtt1	; Hiện thông báo dtt1		
+  lea    dx,buff
+  call   GET_FILE_NAME ; Vào tên tệp cần lấy thuộc tính 
+  HienString dtt2	; Hiện thông báo dtt2
+  call  VAO_SO_N     ; Chọn thuộc tính (từ 0 -> 15)
+  mov   cx,ax		; Đặt thuộc tính vào CX
+  cmp   cx,8
+  jb       L_DTT1
+  add    cx,24	
+L_DTT1:	
+	lea     dx,file_name	; Thuộc tính có trong CX 
+	mov   al,1		; Đặt thuộc tính
+	mov  ah,43h
+	int    21h
+	jnc   L_DTT2
+	HienString Err_DTT; Hiện thông báo Err_DTT
+	jmp  Exit_DTT
+L_DTT2:
+	HienString Suc_DTT; Hiện thông báo Suc_DTT
+Exit_DTT:
+  HienString tieptuc      ; Hiện thông báo tieptuc
+  mov  ah,1                   ; Chờ 1 ký tự từ bàn phím
+  int     21h                         
+  cmp   al,'c'                 ; Ký tự vào có phải 'c'
+  jne    Thoat_DTT      ; Không phải 'c' thì nhảy đế Thoat_DTT,
+  jmp    L_DTT0	; còn đúng là 'c' thì nhảy về L_DTT0
+
+Thoat_DTT:                     
+;  mov  ah,4ch		; Về DOS
+;  int     21h
+  ret
+
+INCLUDE lib2.asm		; lib2.asm chứa CT con VAO_SO_N
+INCLUDE lib3.asm		; lib3.asm chứa CT con GET_FILE_NAME
 END
