@@ -1,1 +1,1 @@
-t:\tc\bin\tcc -ms -It:\tc\include -Lt:\tc\lib  %1   %2   %3   %4
+t:\tc\bin\tcc -ms -It:\tc\include -Lt:\tc\lib  caux.c cn1.asm cn2.asm cn3.asm

@@ -15,3 +15,11 @@ Example
 
 Link BTL
 >https://docs.google.com/document/d/1sDGsxwq9ASgmpQ7C8RQDusk7hvMSWD9v/edit?usp=sharing&ouid=111074913842098327185&rtpof=true&sd=true
+
+
+RUN CODE BTL
+> cd BTASM
+
+And then run a batch file
+
+> DICH.bat
