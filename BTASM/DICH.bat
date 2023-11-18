@@ -1,0 +1,1 @@
+C:\tc\bin\tcc –ms –It:\tc\include –Lt:\tc\lib  %1  %2
