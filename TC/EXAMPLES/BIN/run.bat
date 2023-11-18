@@ -1,0 +1,1 @@
+TCC -ms -Id:\LTHTs6\TC\Include -Ld:\LTHTs6\tc\Lib %1 %2
