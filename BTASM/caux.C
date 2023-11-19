@@ -2,7 +2,7 @@
 #include <conio.h>
 extern THEM_THUOC_TINH();
 extern int TBC2SO();
-extern CONGJOYSTICK();
+extern FPU();
 void main()
 {
       char tl;
@@ -33,7 +33,7 @@ void main()
                  {
                     case 1: THEM_THUOC_TINH(); break;
                     case 2: TBC2SO(); break;
-                    case 3: CONGJOYSTICK(); break;
+                    case 3: FPU(); break;
                     case 4: printf("\n     THOAT VE DOS!"); return; 
                     default: printf("\n     Nhap sai roi, hay nhap lai!");
                  }
