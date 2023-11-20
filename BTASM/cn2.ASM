@@ -21,16 +21,16 @@ _TBC2SO proc
     call VAO_SO_N
     HienString M3
     add ax,bx
-    and ax,ax
-    jns L1
+    and ax,ax ; Giá trị tổng là âm hay dương?
+    jns L1 ; Tổng là dương thì nhảy đến L1
     HienString dautru
-    neg ax
+    neg ax ; đổi dấu số bị chia
   L1:
-    shr ax,1
-    pushf
+    shr ax,1 ; Chia đôi làm tròn dưới => shift right
+    pushf ; Cất giá trị cờ vào stack (thực chất là giá trị cờ Carry)
     call HIEN_SO_N
-    popf
-    jnc L2
+    popf ; Lấy lại giá trị cờ từ stack (lấy lại trạng thái bit cờ Carry)
+    jnc L2 ; Nếu Carry=0 (giá trị tổng là chẳn) thì nhảy
     HienString M4
   L2:
     HienString M5

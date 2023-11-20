@@ -1,0 +1,1 @@
+jb 	L2	; Nhảy nếu n dưới 2 (n=0 và n=1) -jum bottom
