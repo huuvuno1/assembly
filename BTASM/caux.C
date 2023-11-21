@@ -23,7 +23,7 @@ void main()
                  clrscr();
                  printf("\n            CAC CHUC NANG CUA BTL");
                  printf("\n            ---------***----------");
-                 printf("\n\n     1. Chuc nang SET ATT");
+                 printf("\n\n     1. Chuc nang dat thuoc tinh cho tep");
                  printf("\n     2. Trung binh cong 2 so nguyen");
                  printf("\n     3. Lieu MT co FPU");
                  printf("\n     4. Thoat ve DOS");
