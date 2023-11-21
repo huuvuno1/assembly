@@ -1585,18 +1585,17 @@ Khi chương trình chạy yêu cầu có dạng :
 
 
 
-
 INCLUDE lib1.asm
 .MODEL small
 .STACK 100h
 .DATA
- tm            db  13,10,’ Hay vao ten thu muc can tao : $’
- Err_MD   db 13,10,’ Khong tao duoc thu muc !$’
-Suc_MD   db 13,10,’ Thu muc da duoc tao !$’
-tieptuc       db 1310,’ Co tiep tuc CT (c/k) ? $’
-buff           db 30
-		       db ?
-dir_name   db 30 dup(?)
+tm db  13,10, 'Hay vao ten thu muc can tao : $'
+Err_MD db 13,10, 'Khong tao duoc thu muc: $'
+Suc_MD db 13,10, 'Thu muc da duoc tao: $'
+tieptuc  db 13,10, 'Co tiep tuc CT (c/k) ? $'
+buff  db 30
+        db ?
+file_name   db 30 dup(?)
 .CODE
  PS:
 		mov  ax,@data
@@ -1621,11 +1620,12 @@ HienString  tm	; Hiện thông báo tm
            cmp   al,'c'                 ; Ký tự vào có phải 'c'
            jne    Thoat_TM        ; Không phải 'c' thì nhảy đế Thoat_TM,
            jmp    L_TM0	 ; còn đúng là 'c' thì nhảy về L_TM0
-   Thoat_TTM:                     
+   Thoat_TM:                     
 			mov  ah,4ch		; Về DOS
 			int     21h
 INCLUDE lib3.asm		; lib3.asm chứa CT con GET_DIR_NAME
 			END  PS
+
 
 Chú ý: Xóa thư mục và chuyển thư mục giống bài tập trên chỉ cần thay chức năng 39h bằng chức năng 3ah (xóa thư mục) hoăc 3bh (chuyển thư muc).
 
