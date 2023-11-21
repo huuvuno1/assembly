@@ -89,10 +89,10 @@ PS:
 	mov  ax,1		; ax=1
 	cmp  cx,2		; Liệu n ≤ 2
 	jb      HIEN		; Đúng là ≤ 2 thì nhảy đến nhãn HIEN
-   LAP:			; còn không thì thực hiện vòng lặp tính n!
+LAP:			; còn không thì thực hiện vòng lặp tính n!
 	mul   cx		; ax=ax*cx
 	loop  LAP
-   HIEN:
+HIEN:
 	call   HIEN_SO_N	; Hiện giá trị n! (có trong ax)
 	HienString M4	; Hiện thông báo M4 (‘Co tiep tuc CT (c/k) ?’)
 	mov  ah,1		; Chờ nhận 1 ký tự từ bàn phím
@@ -100,11 +100,18 @@ PS:
 	cmp  al,'c'		; Ký tự vừa nhận có phải là ký tự ‘c’ ?
 	jne    Exit		; Nếu không phải thì nhảy đến nhãn Exit (về DOS)
 	jmp   PS		; Còn không thì quay về đầu (bắt đầu lại chương trình)
-   Exit:
+Exit:
 	mov  ah,4ch		; Về DOS
 	int     21h
 INCLUDE lib2.asm
 	END PS
+
+
+
+
+
+
+
 
 Bài 3
 ;---------------------------------------
@@ -1299,25 +1306,15 @@ Tệp Assembly:
 		ret
 @CSN$qiii  ENDP
 		END
+		
+		
+		
+
 CÁC BÀI TẬP LẬP TRÌNH HỆ THỐNG
 
 Bài 1
 Hãy viết chương trình cho biết máy tính bạn đang dùng có ổ mềm nào hay không? Nếu có thì bao nhiêu ổ?
 Cách giải : Chú ý byte của có địa chỉ 0:410h của vùng dữ liệu ROM BIOS có chứa các thông tin liên quan đến thông tin về ổ đĩa mềm, cụ thể như sau :
-x
-x
-
-
-
-
-
-
-
-
-
-
-x
-
 
 
 
