@@ -1,5 +1,6 @@
 INCLUDE lib1.asm
 .MODEL small
+.STACK 100h
 .DATA
      m1 db 13,10, 'May tinh co FPU khong: $'
      co db 13,10, 'Co $'
